@@ -53,14 +53,14 @@ namespace WindowsFormsApplication1
 
             //if the button that's being selected is a digit then don't put spaces around it
             label1.Text += char.IsDigit(Convert.ToChar(text)) ? text : " " + text + " ";
+
+            //with my all in one text writer, the periods get spaces around them, so we remove them
             label1.Text = label1.Text.Replace(" . ", ".");
 
             //if there isn't an equal sign then just break out of the function
             if (!label1.Text.Contains("=")) return;
 
-            //to use my evaluate function, there can't be an equal sign
-            label1.Text = label1.Text.Replace("= ", "").Replace(" ^ ", "^");
-            //with my all in one text writer, the periods get spaces around them, so we remove them
+            label1.Text = label1.Text.Replace("= ", "");
 
             //^ isn't a real mathmatical operation so I can't pass it through my evaluate function
             while (label1.Text.Contains("^"))
@@ -71,15 +71,34 @@ namespace WindowsFormsApplication1
                 //since I the index of the ^, then before it should be the first number and after it will be the second number
                 //By doing it this way I'm being returned a char and since those use the ascii value, if I didn't use
                 //getnumericvalue, it would return me the ascii number instead of the decimal number
-                var first = char.GetNumericValue(label1.Text[index - 1]);
-                var second = char.GetNumericValue(label1.Text[index + 1]);
+                var temp = label1.Text.Substring(0, index-1);
+                var c = temp.ToCharArray();
+                Array.Reverse(c);
+
+                var backwards = new string(c);
+                var num = backwards.Contains(" ") ? backwards.IndexOf(" ") : backwards.Length;
+
+                backwards = backwards.Substring(0, num);
+                c = backwards.ToCharArray();
+                Array.Reverse(c);
+
+                var first = Convert.ToInt32(new string(c));
+
+                temp = label1.Text.Substring(index);
+                num = temp.Contains(" ") ? temp.IndexOf(" ") : temp.Length;
+
+                var second = Convert.ToInt32(temp.Substring(2, num));
+
 
                 //Math.Pow is how you do exponent calculations
                 var equals = Convert.ToString(Math.Pow(first, second));
 
                 //Now I need to edit my string to add in the change so the Evaluate function can understand it
-                label1.Text = label1.Text.Replace(first + "^" + second, equals);
+                label1.Text = label1.Text.Replace(first + " ^ " + second, equals);
             }
+
+            //to use my evaluate function, there can't be an equal sign
+            label1.Text.Replace(" ^ ", "^");
 
             label1.Text = Evaluate(label1.Text);
         }
