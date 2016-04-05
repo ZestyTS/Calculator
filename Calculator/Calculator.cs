@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
@@ -35,12 +36,12 @@ namespace WindowsFormsApplication1
             }
 
             //if label1.text is blank then no mathmatical operations should be passed
-            if (string.IsNullOrEmpty(label1.Text) && (!char.IsDigit(Convert.ToChar(text)) && text != @"."))
+            if (string.IsNullOrEmpty(label1.Text) && (!char.IsDigit(Convert.ToChar(text)) && (text != @"." && text != @"(" && text != @")")))
                 //returns just break out of the function
                 return;
 
             //can't have back to back mathmatical operations
-            if ((!char.IsDigit(Convert.ToChar(text)) && text != @".") && label1.Text[label1.Text.Length - 1] == ' ')
+            if ((!char.IsDigit(Convert.ToChar(text)) && (text != @"." && text != @"(" && text != @")")) && label1.Text[label1.Text.Length - 1] == ' ')
                 return;
 
             //if there's an equal sign then that means we already solved the equation so we should start from scratch
@@ -56,13 +57,31 @@ namespace WindowsFormsApplication1
 
             //with my all in one text writer, the periods get spaces around them, so we remove them
             label1.Text = label1.Text.Replace(" . ", ".");
+            label1.Text = label1.Text.Replace(" ( ", "(").Replace(" ) ", ")");
+
+            if (label1.Text.Length > 1)
+            {
+                if (char.IsDigit(label1.Text[label1.Text.Length - 2]) && label1.Text[label1.Text.Length - 1] == '(')
+                    label1.Text = label1.Text.Substring(0, label1.Text.Length - 1) + @" * (";
+                else if (char.IsDigit(label1.Text[label1.Text.Length - 1]) && label1.Text[label1.Text.Length - 2] == ')')
+                    label1.Text = label1.Text.Substring(0, label1.Text.Length - 2) + @") * " + text;
+            }
 
             //if there isn't an equal sign then just break out of the function
             if (!label1.Text.Contains("=")) return;
 
+            var left = label1.Text.Count(x => x == '(');
+            var right = label1.Text.Count(x => x == ')');
+
+            if (left != right)
+            {
+                clear_Click(sender, e);
+                return;
+            }
 
             //to use my evaluate function, there can't be an equal sign
             label1.Text = label1.Text.Replace("= ", "");
+
 
             //^ isn't a real mathmatical operation so I can't pass it through my evaluate function
             while (label1.Text.Contains("^"))
@@ -171,9 +190,9 @@ namespace WindowsFormsApplication1
         {
             //e.KeyChar returns the ascii position of the character that was pressed
 
-            //all digits, +, -, *, ^, /, e, E
+            //all digits, +, -, *, ^, /, e, E, (, )
             //enter/return key is not used because that's another way you can enter buttons so pressing E or e will do it instead
-            if ((e.KeyChar >= 45 && e.KeyChar <= 57) || e.KeyChar == 94 || e.KeyChar == 43 || e.KeyChar == 42 || e.KeyChar == 69 || e.KeyChar == 101)
+            if ((e.KeyChar >= 45 && e.KeyChar <= 57) || e.KeyChar == 94 || (e.KeyChar >= 40 && e.KeyChar <= 43) || e.KeyChar == 69 || e.KeyChar == 101)
                 Buttonclick(sender, e);
             //c or C for Clear
             else if (e.KeyChar == 67 || e.KeyChar == 99)

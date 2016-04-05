@@ -51,6 +51,8 @@ namespace WindowsFormsApplication1
             this.button18 = new System.Windows.Forms.Button();
             this.clear = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
+            this.button17 = new System.Windows.Forms.Button();
+            this.button19 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -260,11 +262,33 @@ namespace WindowsFormsApplication1
             this.button16.UseVisualStyleBackColor = true;
             this.button16.Click += new System.EventHandler(this.Delete_click);
             // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(165, 127);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(75, 23);
+            this.button17.TabIndex = 21;
+            this.button17.Text = "(";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.Buttonclick);
+            // 
+            // button19
+            // 
+            this.button19.Location = new System.Drawing.Point(246, 127);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(75, 23);
+            this.button19.TabIndex = 22;
+            this.button19.Text = ")";
+            this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.Buttonclick);
+            // 
             // FrmCalc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(407, 277);
+            this.Controls.Add(this.button19);
+            this.Controls.Add(this.button17);
             this.Controls.Add(this.button16);
             this.Controls.Add(this.clear);
             this.Controls.Add(this.button18);
@@ -317,6 +341,8 @@ namespace WindowsFormsApplication1
         private System.Windows.Forms.Button button18;
         private System.Windows.Forms.Button clear;
         private Button button16;
+        private Button button17;
+        private Button button19;
     }
 }
 
