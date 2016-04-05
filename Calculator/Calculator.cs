@@ -109,6 +109,7 @@ namespace WindowsFormsApplication1
 
         private void sqrt_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(label1.Text)) return;
             var text = label1.Text;
 
             //this grabs the last character of text
