@@ -33,6 +33,7 @@ namespace WindowsFormsApplication1
 
                 //since keyboard inputs come in ASCII way, we need to convert them to their non ASCII values
                 text = keyevent.KeyChar.ToString();
+
             }
 
             //if label1.text is blank then no mathmatical operations should be passed
@@ -59,6 +60,7 @@ namespace WindowsFormsApplication1
             label1.Text = label1.Text.Replace(" . ", ".");
             label1.Text = label1.Text.Replace(" ( ", "(").Replace(" ) ", ")");
 
+            //I all this does is add * if there isn't a mathmatical expression between a digit and ( or )
             if (label1.Text.Length > 1)
             {
                 if (char.IsDigit(label1.Text[label1.Text.Length - 2]) && label1.Text[label1.Text.Length - 1] == '(')
@@ -70,9 +72,11 @@ namespace WindowsFormsApplication1
             //if there isn't an equal sign then just break out of the function
             if (!label1.Text.Contains("=")) return;
 
+            //counts to make sure there are as many ( as there are )
             var left = label1.Text.Count(x => x == '(');
             var right = label1.Text.Count(x => x == ')');
 
+            //if they aren't the same then someone messed up and the only way to fix it is to just remove everything
             if (left != right)
             {
                 clear_Click(sender, e);
