@@ -34,6 +34,8 @@ namespace WindowsFormsApplication1
                 //since keyboard inputs come in ASCII way, we need to convert them to their non ASCII values
                 text = keyevent.KeyChar.ToString();
 
+                // e/E is used for equals, so we need to swap them to the correct thing
+                text = text.Replace("e", "=").Replace("E", "=");
             }
 
             //if label1.text is blank then no mathmatical operations should be passed
