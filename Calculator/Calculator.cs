@@ -60,6 +60,8 @@ namespace WindowsFormsApplication1
             //if there isn't an equal sign then just break out of the function
             if (!label1.Text.Contains("=")) return;
 
+
+            //to use my evaluate function, there can't be an equal sign
             label1.Text = label1.Text.Replace("= ", "");
 
             //^ isn't a real mathmatical operation so I can't pass it through my evaluate function
@@ -68,25 +70,30 @@ namespace WindowsFormsApplication1
                 //since I know there is a ^ in my string, I need to find the index of it in the string
                 var index = label1.Text.IndexOf("^");
 
-                //since I the index of the ^, then before it should be the first number and after it will be the second number
-                //By doing it this way I'm being returned a char and since those use the ascii value, if I didn't use
-                //getnumericvalue, it would return me the ascii number instead of the decimal number
+               //I break up the string to land on the last digit of the first exponent
                 var temp = label1.Text.Substring(0, index-1);
                 var c = temp.ToCharArray();
+                //convert to character array so I can reverse it
                 Array.Reverse(c);
 
                 var backwards = new string(c);
+                //I look through the string backwards to find the space before the string of numbers
                 var num = backwards.Contains(" ") ? backwards.IndexOf(" ") : backwards.Length;
 
+                //I remove everything that isn't the numbers of the exponent
                 backwards = backwards.Substring(0, num);
                 c = backwards.ToCharArray();
                 Array.Reverse(c);
 
+                //rereverse it so it's fowards and we set it to a new string to convert to int to get our first exponent number
                 var first = Convert.ToInt32(new string(c));
+
 
                 temp = label1.Text.Substring(index);
                 num = temp.Contains(" ") ? temp.IndexOf(" ") : temp.Length;
 
+
+                //we move the "^ " and everything after the number to get our second number
                 var second = Convert.ToInt32(temp.Substring(2, num));
 
 
@@ -96,9 +103,6 @@ namespace WindowsFormsApplication1
                 //Now I need to edit my string to add in the change so the Evaluate function can understand it
                 label1.Text = label1.Text.Replace(first + " ^ " + second, equals);
             }
-
-            //to use my evaluate function, there can't be an equal sign
-            label1.Text.Replace(" ^ ", "^");
 
             label1.Text = Evaluate(label1.Text);
         }
