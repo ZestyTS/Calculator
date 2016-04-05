@@ -181,6 +181,17 @@ namespace WindowsFormsApplication1
             //s or S for Square Root
             else if (e.KeyChar == 115 || e.KeyChar == 83)
                 sqrt_Click(sender, e);
+            //del or backspace for <--
+            else if (e.KeyChar == 8 || e.KeyChar == 127)
+                Delete_click(sender, e);
+        }
+
+        private void Delete_click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(label1.Text)) return;
+
+            //we remove the last character
+            label1.Text = label1.Text.Substring(0, label1.Text.Length - 1);
         }
     }
 }

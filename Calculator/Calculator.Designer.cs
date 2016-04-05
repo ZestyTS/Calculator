@@ -50,6 +50,7 @@ namespace WindowsFormsApplication1
             this.sqrt = new System.Windows.Forms.Button();
             this.button18 = new System.Windows.Forms.Button();
             this.clear = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -249,11 +250,22 @@ namespace WindowsFormsApplication1
             this.clear.UseVisualStyleBackColor = true;
             this.clear.Click += new System.EventHandler(this.clear_Click);
             // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(327, 126);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(75, 23);
+            this.button16.TabIndex = 20;
+            this.button16.Text = "<--";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.Delete_click);
+            // 
             // FrmCalc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(407, 277);
+            this.Controls.Add(this.button16);
             this.Controls.Add(this.clear);
             this.Controls.Add(this.button18);
             this.Controls.Add(this.sqrt);
@@ -275,9 +287,9 @@ namespace WindowsFormsApplication1
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.KeyPreview = true;
-            this.KeyPress += new KeyPressEventHandler(FrmCalc_KeyPress);
             this.Name = "FrmCalc";
             this.Text = "Calculator";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FrmCalc_KeyPress);
             this.ResumeLayout(false);
 
         }
@@ -304,6 +316,7 @@ namespace WindowsFormsApplication1
         private System.Windows.Forms.Button sqrt;
         private System.Windows.Forms.Button button18;
         private System.Windows.Forms.Button clear;
+        private Button button16;
     }
 }
 
